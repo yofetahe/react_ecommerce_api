@@ -1,0 +1,11 @@
+.acc_info_header {
+  margin-bottom: 25px;
+  height: 25px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
+.acc_info_title {
+  float: left;
+  font-weight: bold;
+  font-size: 20px;
+}

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
 const ItemCategory = props => {
   return (
     <div className="card">
-      <div className="image">
+      <div className="image" style={{ maxHeight: "250px", overflow: "hidden" }}>
         <img src={props.category.picture_url} alt="test" />
       </div>
       <div className="extra">
@@ -19,16 +18,9 @@ const ItemCategory = props => {
         >
           {props.category.name}
         </Link>
-        <div className="ui star rating" data-rating="4" />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    ItemCatagories: state.ItemCatagories
-  };
-};
-
-export default connect(mapStateToProps)(ItemCategory);
+export default ItemCategory;

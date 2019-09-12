@@ -9,7 +9,9 @@ import {
   deductCartItemQuantity,
   saveItemForLaterPurchase,
   togglePopup
-} from "../actions/index";
+} from "../../actions";
+import classes from "./cart.module.css";
+import CartQuantity from "../cart/CartQuantity";
 
 class CartContent extends Component {
   addItemQuantityHandler = item => {
@@ -22,7 +24,7 @@ class CartContent extends Component {
     this.props.removeItem(item);
   };
   saveItemForLaterPurchaseHandler = item => {
-    if (this.props.userLoggedIn) {
+    if (sessionStorage.getItem("loggedInUserId")) {
       this.props.saveItemForLaterPurchase(item, this.props.loggedInUserId);
     } else {
       this.props.togglePopup("POPUP_LOGIN", !this.props.showPopupLogin);
@@ -35,14 +37,20 @@ class CartContent extends Component {
   render() {
     return (
       <div>
-        <div className="ui breadcrumb">
+        {/* <div className="ui breadcrumb">
           <Link to="/" className="section">
             Home
           </Link>
           <i className="right angle icon divider" />
           <span className="section">Cart</span>
         </div>
-        <div className="ui divider" />
+        <div className="ui divider" /> */}
+        <div className={classes.acc_info_header}>
+          <div className={classes.acc_info_title}>Selected Items</div>
+          <div style={{ float: "right" }}>
+            <CartQuantity />
+          </div>
+        </div>
         <table className="ui very basic collapsing celled table">
           <thead>
             <tr>
@@ -61,8 +69,8 @@ class CartContent extends Component {
               this.props.selectedProducts.map(product => {
                 return (
                   <CartProduct
-                    addItemQuantityHandler={this.addItemQuantityHandler}
-                    deductItemQuantityHandler={this.deductItemQuantityHandler}
+                    addCartItemQuantity={this.props.addCartItemQuantity}
+                    deductCartItemQuantity={this.props.deductCartItemQuantity}
                     removeItem={this.removeItemHandler}
                     saveItemForLaterPurchaseHandler={
                       this.saveItemForLaterPurchaseHandler
@@ -111,14 +119,14 @@ class CartContent extends Component {
 
 const mapStateToProps = state => {
   return {
-    selectedProducts: state.selectedProducts,
-    totalPrice: state.totalPrice,
-    qtyAddButton: state.quantityAddButton,
-    qtyDeductButton: state.quantityDeductButton,
-    userLoggedIn: state.userLoggedIn,
-    showPopupLogin: state.showPopupLogin,
-    showPopupSignup: state.showPopupSignup,
-    loggedInUserId: state.loggedInUserId
+    selectedProducts: state.cart.selectedProducts,
+    totalPrice: state.cart.totalPrice,
+    qtyAddButton: state.cart.quantityAddButton,
+    qtyDeductButton: state.cart.quantityDeductButton,
+    userLoggedIn: state.account.userLoggedIn,
+    showPopupLogin: state.account.showPopupLogin,
+    showPopupSignup: state.account.showPopupSignup,
+    loggedInUserId: state.account.loggedInUserId
   };
 };
 

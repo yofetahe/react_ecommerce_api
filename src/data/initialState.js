@@ -16,7 +16,8 @@ const initialState = {
   quantityAddButton: true,
   quantityDeductButton: false,
   purchaseInProcess: true,
-  savedItemsList: []
+  savedItemsList: [],
+  creditCardInfo: []
 };
 
 export default initialState;

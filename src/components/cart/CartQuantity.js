@@ -9,11 +9,11 @@ class CartQuantity extends Component {
         <div style={{ display: "inline-block" }}>
           <Link to="/" class="ui label">
             <div class="ui label">
-              <i class="home icon">&nbsp;</i> BACK
+              <i class="home icon">&nbsp;</i> HOME
             </div>
           </Link>
         </div>{" "}
-        {this.props.selectedProducts.length > 0 && (
+        {this.props.selectedProducts && this.props.selectedProducts.length > 0 && (
           <div style={{ display: "inline-block" }}>
             <Link to="/cart" class="ui label">
               <div class="ui label">
@@ -30,7 +30,7 @@ class CartQuantity extends Component {
 
 const mapStateToProps = state => {
   return {
-    selectedProducts: state.selectedProducts
+    selectedProducts: state.cart.selectedProducts
   };
 };
 

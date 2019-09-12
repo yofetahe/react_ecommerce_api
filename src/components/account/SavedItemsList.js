@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getSavedItemsList, deleteSavedItem } from "../actions";
-import Item from "./Item";
-import CartQuantity from "./CartQuantity";
+import { getSavedItemsList, deleteSavedItem } from "../../actions";
+import Item from "../items/Item";
+import CartQuantity from "../cart/CartQuantity";
 
 class SavedItemsList extends Component {
   componentDidMount() {
@@ -74,7 +74,7 @@ class SavedItemsList extends Component {
 
 const mapStateToProps = state => {
   return {
-    savedItemsList: state.savedItemsList
+    savedItemsList: state.account.savedItemsList
   };
 };
 

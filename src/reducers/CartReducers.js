@@ -1,4 +1,12 @@
-const CartReducers = (state = [], action) => {
+const cartState = {
+  selectedProducts: [],
+  totalPrice: 0,
+  quantityAddButton: true,
+  quantityDeductButton: false,
+  purchaseInProcess: true
+};
+
+const CartReducers = (state = cartState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       let updatedTotalPrice = state.totalPrice + action.payload["price"];
@@ -12,18 +20,21 @@ const CartReducers = (state = [], action) => {
       };
     case "ADD_CART_ITEM_QUANTITY":
       let added_items = [...state.selectedProducts];
-      let incrementedPrice = state.totalPrice + action.payload["price"];
       let added_input = action.payload;
-      let balance = action.balance;
-      console.log("REDUCER >>>> ", balance);
+      let incrementedPrice = state.totalPrice;
+      // let qtyAddButton = true;
+
       added_items.map(i => {
         if (
           i.item_id === added_input.item_id &&
           i.size_id === added_input.size_id &&
-          i.color_id === added_input.color_id
+          i.color_id === added_input.color_id &&
+          action.balance > i.quantity
         ) {
           i.quantity = i.quantity + 1;
           i.totalPrice = i.price * i.quantity;
+          incrementedPrice = state.totalPrice + action.payload["price"];
+          // if (action.balance === i.quantity) qtyAddButton = false;
           return i;
         }
         return i;
@@ -36,15 +47,22 @@ const CartReducers = (state = [], action) => {
       };
     case "DEDUCT_CART_ITEM_QUANTITY":
       let deducted_input = action.payload;
+      //if it reach a min value
       if (deducted_input.quantity === 1) {
         return {
-          ...state
+          ...state,
+          quantityDeductButton: false,
+          quantityAddButton: true
         };
       }
-      let deducted_items = [...state.selectedProducts];
+      let previousSelectedProducts = [...state.selectedProducts];
+
+      //deducting the total price
       let decreasedPrice = state.totalPrice - action.payload["price"];
 
-      deducted_items.map(i => {
+      let updatedQty = deducted_input.quantity;
+      //deducting the item quantity
+      previousSelectedProducts.map(i => {
         if (
           i.item_id === deducted_input.item_id &&
           i.size_id === deducted_input.size_id &&
@@ -52,14 +70,17 @@ const CartReducers = (state = [], action) => {
         ) {
           i.quantity = i.quantity - 1;
           i.totalPrice = i.price * i.quantity;
+          updatedQty = i.quantity;
           return i;
         }
         return i;
       });
       return {
         ...state,
-        selectedProducts: deducted_items,
-        totalPrice: decreasedPrice
+        selectedProducts: previousSelectedProducts,
+        totalPrice: decreasedPrice,
+        quantityDeductButton: updatedQty === 1 ? false : true,
+        quantityAddButton: true
       };
     case "REMOVE_CART_ITEM":
       let remove_input = action.payload;
@@ -77,6 +98,18 @@ const CartReducers = (state = [], action) => {
         selectedProducts: selectedProducts,
         totalPrice: removedPrice
       };
+    case "SUBMIT_ORDER":
+      if (action.payload) {
+        return {
+          ...state,
+          purchaseInProcess: false,
+          selectedProducts: []
+        };
+      } else {
+        return {
+          ...state
+        };
+      }
     default:
       return state;
   }

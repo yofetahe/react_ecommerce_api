@@ -186,18 +186,8 @@ class Header extends Component {
           {sessionStorage.getItem("loggedInUserEmail") ? (
             <div>
               {this.props.loggedInUserEmail} |{" "}
-              <Link
-                to={`/SavedItems/${sessionStorage.getItem("loggedInUserId")}`}
-              >
-                Saved Items
-              </Link>{" "}
-              |{" "}
-              <Link
-                to={`/MyAccount/${sessionStorage.getItem("loggedInUserId")}`}
-              >
-                My Account
-              </Link>{" "}
-              |{" "}
+              <Link to={`/SavedItems`}>Saved Items</Link> |{" "}
+              <Link to={`/MyAccount`}>My Account</Link> |{" "}
               <span
                 onClick={this.logoutHandler}
                 style={{ cursor: "pointer", color: "blue" }}
@@ -239,12 +229,12 @@ class Header extends Component {
 
 const mapStateToProps = state => {
   return {
-    userLoggedIn: state.userLoggedIn,
-    loggedInUserId: state.loggedInUserId,
-    loggedInUserEmail: state.loggedInUserEmail,
-    showPopupLogin: state.showPopupLogin,
-    showPopupSignup: state.showPopupSignup,
-    authenticationFailed: state.authenticationFailed
+    userLoggedIn: state.account.userLoggedIn,
+    loggedInUserId: state.account.loggedInUserId,
+    loggedInUserEmail: state.account.loggedInUserEmail,
+    showPopupLogin: state.account.showPopupLogin,
+    showPopupSignup: state.account.showPopupSignup,
+    authenticationFailed: state.account.authenticationFailed
   };
 };
 

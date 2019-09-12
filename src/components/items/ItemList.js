@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Item from "./Item";
 import ItemCatagoryDetail from "./ItemCategoryDetail";
-import CartQuantity from "./CartQuantity";
+import CartQuantity from "../cart/CartQuantity";
 import {
   fetchCategoryDetailsAndItemsByCategoryId,
-  fetchItemByCategoryTypeId
-} from "../actions";
+  fetchItemByCategoryTypeId,
+  sortItemsByPrice
+} from "../../actions";
 
 class ItemList extends Component {
   componentDidMount() {
     const cat_id = this.props.match.params.category_id;
     this.props.fetchCategoryDetailsAndItemsByCategoryId(cat_id);
   }
+
   componentDidUpdate(nextProps) {
     if (nextProps.match.params.type_id !== this.props.match.params.type_id) {
       this.props.fetchItemByCategoryTypeId(
@@ -21,6 +23,20 @@ class ItemList extends Component {
       );
     }
   }
+
+  sortItemsDescByPrice = () => {
+    const descSortedItems = []
+      .concat(this.props.products)
+      .sort((a, b) => b.price - a.price);
+    this.props.sortItemsByPrice(descSortedItems);
+  };
+
+  sortItemsAscByPrice = () => {
+    const ascSortedItems = []
+      .concat(this.props.products)
+      .sort((a, b) => a.price - b.price);
+    this.props.sortItemsByPrice(ascSortedItems);
+  };
 
   render() {
     return (
@@ -59,10 +75,12 @@ class ItemList extends Component {
         >
           <ItemCatagoryDetail
             selectedCategory={this.props.location.state.selectedCategory}
-            totalSize={this.props.products.length}
+            totalSize={this.props.products && this.props.products.length}
             category_id={this.props.match.params.category_id}
             category_name={this.props.location.state.selectedCategory}
             type_id={this.props.match.params.type_id}
+            sortItemsDescByPrice={this.sortItemsDescByPrice}
+            sortItemsAscByPrice={this.sortItemsAscByPrice}
           />
         </div>
         <div
@@ -91,8 +109,8 @@ class ItemList extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
-    colorsList: state.colorList,
+    products: state.item.products,
+    colorsList: state.item.colorList,
     selectedCategory: state.selectedCategory
   };
 };
@@ -101,6 +119,7 @@ export default connect(
   mapStateToProps,
   {
     fetchCategoryDetailsAndItemsByCategoryId,
-    fetchItemByCategoryTypeId
+    fetchItemByCategoryTypeId,
+    sortItemsByPrice
   }
 )(ItemList);

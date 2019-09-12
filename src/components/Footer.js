@@ -5,8 +5,11 @@ const Footer = () => {
     <div
       style={{
         borderTop: "1px solid #ccc",
-        paddingTop: "10px",
-        marginTop: "20px"
+        padding: "40px 20px",
+        marginTop: "20px",
+        backgroundColor: "#101010de",
+        color: "#fff",
+        clear: "both"
       }}
     >
       Page Footer
