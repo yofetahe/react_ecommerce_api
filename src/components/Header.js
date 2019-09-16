@@ -10,6 +10,7 @@ import {
 } from "../actions";
 import Login from "./account/Login";
 import Signup from "./account/Signup";
+import classes from "./header_footer.module.css";
 
 class Header extends Component {
   state = {
@@ -154,35 +155,15 @@ class Header extends Component {
 
   render() {
     return (
-      <div
-        style={{
-          height: "100px",
-          borderBottom: "1px solid #ccc",
-          boxShadow: "0 8px 6px -6px #ccc",
-          position: "relative",
-          marginBottom: "20px"
-        }}
-      >
-        <div style={{ float: "left", width: "50%", display: "inline-block" }}>
+      <div className={classes.header_background}>
+        <div className={classes.logo}>
           <img
             alt="logo"
-            src="http://selenaashley.com/wp-content/uploads/sites/6357/2017/09/ABD123C8-BD6A-49E4-8C23-CAB370E9C9A9.png"
-            className="ui image"
-            style={{ width: "300px" }}
+            src="https://logodix.com/logo/2085040.png"
+            style={{ width: "180px" }}
           />
         </div>
-        <div
-          style={{
-            float: "right",
-            width: "50%",
-            display: "inline-block",
-            textAlign: "right",
-            paddingRight: "5%",
-            position: "absolute",
-            top: "50%",
-            transform: "translateY(-50%)"
-          }}
-        >
+        <div className={classes.header_link}>
           {sessionStorage.getItem("loggedInUserEmail") ? (
             <div>
               {this.props.loggedInUserEmail} |{" "}

@@ -105,21 +105,24 @@ class Item extends Component {
                   <div>Loading...</div>
                 ) : (
                   <div>
-                    {this.props.sizeList.map(sz => {
-                      if (parseInt(sz.item_id) === this.props.product.item_id) {
-                        return (
-                          <ItemSize
-                            key={sz.size_id}
-                            size_name={sz.name}
-                            size_id={sz.size_id}
-                            sizeSelectionHandler={this.sizeSelectionHandler}
-                            item_id={this.props.product.item_id}
-                          />
-                        );
-                      } else {
-                        return;
-                      }
-                    })}
+                    {this.props.sizeList &&
+                      this.props.sizeList.map(sz => {
+                        if (
+                          parseInt(sz.item_id) === this.props.product.item_id
+                        ) {
+                          return (
+                            <ItemSize
+                              key={sz.size_id}
+                              size_name={sz.name}
+                              size_id={sz.size_id}
+                              sizeSelectionHandler={this.sizeSelectionHandler}
+                              item_id={this.props.product.item_id}
+                            />
+                          );
+                        } else {
+                          return;
+                        }
+                      })}
                     {this.props.sizeList.length === 0 && (
                       <div style={{ color: "RED" }}>SOLD OUT</div>
                     )}
@@ -144,19 +147,20 @@ class Item extends Component {
               <div>Loading...</div>
             ) : (
               <div>
-                {this.props.colorList.map(clr => {
-                  if (parseInt(clr.item_id) === this.props.product.item_id) {
-                    return (
-                      <ItemColor
-                        key={clr.color_id}
-                        color_name={clr.name}
-                        color_id={clr.color_id}
-                        colorSelectionHandler={this.colorSelectionHandler}
-                        item_id={this.props.product.item_id}
-                      />
-                    );
-                  }
-                })}
+                {this.props.colorList &&
+                  this.props.colorList.map(clr => {
+                    if (parseInt(clr.item_id) === this.props.product.item_id) {
+                      return (
+                        <ItemColor
+                          key={clr.color_id}
+                          color_name={clr.name}
+                          color_id={clr.color_id}
+                          colorSelectionHandler={this.colorSelectionHandler}
+                          item_id={this.props.product.item_id}
+                        />
+                      );
+                    }
+                  })}
                 {this.props.sizeList.length === 0 && (
                   <div style={{ color: "RED" }}>SOLD OUT</div>
                 )}
@@ -225,6 +229,7 @@ class Item extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log("SIZE LIST >>> ", state.item.sizeList);
   return {
     colorList: state.item.colorList,
     sizeList: state.item.sizeList,

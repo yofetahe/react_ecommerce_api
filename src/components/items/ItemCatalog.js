@@ -19,7 +19,7 @@ class ItemCatalog extends Component {
             <CartQuantity />
           </div>
         </div>
-        <div className="ui four cards">
+        <div style={{ marginBottom: "50px", textAlign: "center" }}>
           {this.props.ItemCatagories &&
             this.props.ItemCatagories.map((cat, index) => {
               return <ItemCategory key={index} category={cat} />;

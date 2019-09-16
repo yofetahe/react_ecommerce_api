@@ -17,7 +17,7 @@ class App extends React.Component {
     return (
       <BrowserRouter history={history}>
         <Header />
-        <div className="ui container">
+        <div className="ui container" style={{ minHeight: "800px" }}>
           <Switch>
             <Route exact path="/" component={ItemCatalog} />
             <Route exact path="/Items/:category_id" component={ItemList} />

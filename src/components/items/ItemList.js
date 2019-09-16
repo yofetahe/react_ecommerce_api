@@ -8,6 +8,7 @@ import {
   fetchItemByCategoryTypeId,
   sortItemsByPrice
 } from "../../actions";
+import classes from "./item.module.css";
 
 class ItemList extends Component {
   componentDidMount() {
@@ -65,14 +66,7 @@ class ItemList extends Component {
             <CartQuantity />
           </div>
         </div>
-        <div
-          style={{
-            float: "left",
-            width: "20%",
-            display: "inline-block",
-            verticalAlign: "top"
-          }}
-        >
+        <div className={classes.item_category_detail}>
           <ItemCatagoryDetail
             selectedCategory={this.props.location.state.selectedCategory}
             totalSize={this.props.products && this.props.products.length}
@@ -83,14 +77,7 @@ class ItemList extends Component {
             sortItemsAscByPrice={this.sortItemsAscByPrice}
           />
         </div>
-        <div
-          style={{
-            float: "right",
-            width: "80%",
-            display: "inline-block",
-            verticalAlign: "top"
-          }}
-        >
+        <div className={classes.items_list}>
           {this.props.products &&
             this.props.products.map(product => {
               return (

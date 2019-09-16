@@ -9,3 +9,30 @@
   font-weight: bold;
   font-size: 20px;
 }
+
+@media (min-width: 990px) {
+  .item_category_detail {
+    float: left;
+    width: 20%;
+    vertical-align: top;
+  }
+  .items_list {
+    float: right;
+    width: 75%;
+    vertical-align: top;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 990px) {
+  .item_category_detail {
+    /* width: 100%;
+    margin-bottom: 10px; */
+    display: none;
+  }
+  .items_list {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 50px;
+  }
+}
